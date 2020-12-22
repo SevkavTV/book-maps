@@ -8,24 +8,25 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import Grid from '@material-ui/core/Grid';
-import { Container } from '@material-ui/core';
+import { Container, TextField } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
 import Divider from '@material-ui/core/Divider';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import SearchIcon from '@material-ui/icons/Search';
 import SendIcon from '@material-ui/icons/Send';
 import { createMuiTheme } from '@material-ui/core/styles';
 import MapContainer from './GoogleMaps';
-import { getAllEntries } from './Services/httpRequests'
+import Input from '@material-ui/core/Input';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
 
 // Languages
-const Languages = ['Kazakh', 'Swedish', 'Yiddish', 'Karachay-Balkar', 'Russian', 'Portuguese', 'Cornish', 'Syriac', 'Altaic languages', 'Manx', 'Latvian', 'Walloon', 'French', 'Scots', 'Bashkir', 'Komi', 'Kirghiz', 'Georgian', 'Hungarian', 'Tsonga', 'Altai', 'Gaelic', 'Maori', 'Latin', 'Artificial languages', 'Belarusian', 'Swahili', 'Icelandic', 'Gothic', 'Irish', 'Neapolitan', 'Romansh', 'Spanish', 'Dutch', 'German', 'Esperanto', 'North Ndebele', 'Persian', 'Welsh', 'Zulu', 'Ladino', 'Tongan', 'Italian', 'Hawaiian', 'Aromanian', 'English', 'Shona', 'Samoan', 'Romany']
+const languages = ['Kazakh', 'Swedish', 'Yiddish', 'Karachay-Balkar', 'Russian', 'Portuguese', 'Cornish', 'Syriac', 'Altaic languages', 'Manx', 'Latvian', 'Walloon', 'French', 'Scots', 'Bashkir', 'Komi', 'Kirghiz', 'Georgian', 'Hungarian', 'Tsonga', 'Altai', 'Gaelic', 'Maori', 'Latin', 'Artificial languages', 'Belarusian', 'Swahili', 'Icelandic', 'Gothic', 'Irish', 'Neapolitan', 'Romansh', 'Spanish', 'Dutch', 'German', 'Esperanto', 'North Ndebele', 'Persian', 'Welsh', 'Zulu', 'Ladino', 'Tongan', 'Italian', 'Hawaiian', 'Aromanian', 'English', 'Shona', 'Samoan', 'Romany']
 
 
 
@@ -93,13 +94,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   list: {
-    width: 250,
+    width: 270,
   },
   fullList: {
     width: 'auto',
   },
   formControl: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(2),
     minWidth: 200,
   },
   selectEmpty: {
@@ -109,6 +110,12 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     width: 200,
   },
+  input: {
+    width: 200,
+  },
+  label: {
+    marginLeft: 8,
+  }
 }));
 // Googlemaps
 
@@ -116,15 +123,16 @@ const useStyles = makeStyles((theme) => ({
 
 // App
 function App() {
-
-  getAllEntries(["ISBN", "Place of creation/publication"]).then((resp) => {
-    console.log(resp)
-  })
+  // classes
 
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
   });
+
+
+
+  // left navbar
   const toggleDrawer = (anchor, open) => (event) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -133,12 +141,25 @@ function App() {
     setState({ ...state, [anchor]: open });
   };
 
-  const [language, setLanguage] = React.useState('');
+
+  // multiselect
+  const [language, setLanguage] = React.useState([]);
 
   const handleChange = (event) => {
     setLanguage(event.target.value);
   };
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
 
+  // Navbar definition
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
@@ -148,54 +169,56 @@ function App() {
     >
 
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-autowidth-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          value={language}
-          onChange={handleChange}
-          autoWidth
+        <Grid
+          container
+          direction="column"
+          justify="space-evenly"
+          alignItems="center"
+          spacing={3}
         >
-          {Languages.map((lan) => {
-            return(
-              <MenuItem value={lan}>{lan}</MenuItem>
-            )
-          })}
-        </Select>
-        <FormHelperText>Date</FormHelperText>
+          <Grid item>
+            <InputLabel id="demo-mutiple-checkbox-label" className={classes.label}>Contries</InputLabel>
+            <Select
+              labelId="mutiple-checkbox-label"
+              id="mutiple-checkbox"
+              multiple
+              display={true}
+              value={language}
+              onChange={handleChange}
+              input={<Input />}
+              renderValue={(selected) => selected.join(', ')}
+              MenuProps={MenuProps}
+              className={classes.input}
+            >
+              {languages.map((languagesItem) => (
+                <MenuItem key={languagesItem} value={languagesItem}>
+                  <Checkbox checked={language.indexOf(languagesItem) > -1} />
+                  <ListItemText primary={languagesItem} />
+                </MenuItem>
+              ))}
+            </Select>
+            <Divider />
+          </Grid>
+          <Grid item>
+            <TextField id="standard-basic" label="from" className={classes.input} />
+          </Grid>
+          <Grid item>
+            <TextField id="standard-basic" label="to" className={classes.input} />
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              endIcon={<SendIcon />}
+            >
+              Make query
+            </Button>
+          </Grid>
+        </Grid>
       </FormControl>
-      <Divider />
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-autowidth-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          value={language}
-          onChange={handleChange}
-          autoWidth
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-        <FormHelperText>Language </FormHelperText>
-      </FormControl>
-      <Divider />
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.button}
-        endIcon={<SendIcon />}
-      >
-        Make query
-      </Button>
     </div>
   );
-
-
 
 
   return (
@@ -239,7 +262,7 @@ function App() {
         </AppBar>
       </Container>
       <Container maxWidth style={{ margin: 0, padding: 0 }}>
-        {/* <MapContainer></MapContainer> */}
+        {/* <MapContainer /> */}
       </Container>
     </ThemeProvider>
   );
