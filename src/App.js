@@ -21,6 +21,7 @@ import Select from '@material-ui/core/Select';
 import SearchIcon from '@material-ui/icons/Search';
 import SendIcon from '@material-ui/icons/Send';
 import { createMuiTheme } from '@material-ui/core/styles';
+import MapContainer from './GoogleMaps';
 
 // Languages
 const Languages = ['Kazakh', 'Swedish', 'Yiddish', 'Karachay-Balkar', 'Russian', 'Portuguese', 'Cornish', 'Syriac', 'Altaic languages', 'Manx', 'Latvian', 'Walloon', 'French', 'Scots', 'Bashkir', 'Komi', 'Kirghiz', 'Georgian', 'Hungarian', 'Tsonga', 'Altai', 'Gaelic', 'Maori', 'Latin', 'Artificial languages', 'Belarusian', 'Swahili', 'Icelandic', 'Gothic', 'Irish', 'Neapolitan', 'Romansh', 'Spanish', 'Dutch', 'German', 'Esperanto', 'North Ndebele', 'Persian', 'Welsh', 'Zulu', 'Ladino', 'Tongan', 'Italian', 'Hawaiian', 'Aromanian', 'English', 'Shona', 'Samoan', 'Romany']
@@ -234,6 +235,7 @@ function App() {
         </AppBar>
       </Container>
       <Container maxWidth style={{ margin: 0, padding: 0 }}>
+        <MapContainer></MapContainer>
       </Container>
     </ThemeProvider>
   );
