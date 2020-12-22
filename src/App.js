@@ -5,11 +5,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import Grid from '@material-ui/core/Grid';
 import { CircularProgress, Container, TextField } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
+
 import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
 import Divider from '@material-ui/core/Divider';
@@ -19,7 +19,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import SearchIcon from '@material-ui/icons/Search';
 import SendIcon from '@material-ui/icons/Send';
-import { createMuiTheme } from '@material-ui/core/styles';
+
 import MapContainer from './GoogleMaps';
 import Input from '@material-ui/core/Input';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -31,19 +31,7 @@ const languages = ['Kazakh', 'Swedish', 'Yiddish', 'Karachay-Balkar', 'Russian',
 
 
 // styles
-const Theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#407899',
-    },
-    secondary: {
-      light: '#0066ff',
-      main: '#0044ff',
-      contrastText: '#ffcc00',
-    },
-    tonalOffset: 0.2,
-  },
-});
+
 const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
@@ -132,16 +120,17 @@ function App() {
 
   const [markers, setMarkers] = React.useState([])
 
-  if(markers.length == 0){
+  if (markers.length === 0) {
     getAllEntries(["ISBN", "Place of creation/publication"]).then((resp) => {
       let markers = []
-      for(let item of resp.data){
+      for (let item of resp.data) {
         let marker = {
           id: item['ISBN'],
-          coord: item['Place of creation/publication'] 
+          coord: item['Place of creation/publication']
         }
         markers.push(marker)
       }
+      console.log(markers)
       setMarkers(markers)
     })
   }
@@ -236,8 +225,8 @@ function App() {
 
 
   return (
-    <ThemeProvider theme={Theme}>
-      <Container maxWidth style={{ margin: 0, padding: 0 }}>
+    <>
+      <Container maxWidth="xl" style={{ margin: 0, padding: 0 }}>
         <AppBar position="static" color="primary">
           <Toolbar>
             <IconButton
@@ -275,15 +264,15 @@ function App() {
           </Toolbar>
         </AppBar>
       </Container>
-      <Container maxWidth style={{ margin: 0, padding: 0 }}>
+      <Container maxWidth="xl" style={{ margin: 0, padding: 0 }}>
         {
-          markers.length == 0 ?
-            <CircularProgress />
-          :
-            <MapContainer markers={markers}/>
-        }   
+          // markers.length === 0 ?
+          //   <CircularProgress />
+          // :
+          //   <MapContainer markers={markers}/>
+        }
       </Container>
-    </ThemeProvider>
+    </>
   );
 }
 
