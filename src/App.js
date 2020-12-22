@@ -280,7 +280,7 @@ function App() {
           markers.length == 0 ?
             <CircularProgress />
           :
-            <MapContainer markers={markers} />
+            <MapContainer markers={markers}/>
         }   
       </Container>
     </ThemeProvider>
