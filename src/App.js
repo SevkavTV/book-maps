@@ -8,7 +8,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import Grid from '@material-ui/core/Grid';
-import { Container, TextField } from '@material-ui/core';
+import { CircularProgress, Container, TextField } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
@@ -24,7 +24,7 @@ import MapContainer from './GoogleMaps';
 import Input from '@material-ui/core/Input';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-
+import { getAllEntries } from './Services/httpRequests'
 // Languages
 const languages = ['Kazakh', 'Swedish', 'Yiddish', 'Karachay-Balkar', 'Russian', 'Portuguese', 'Cornish', 'Syriac', 'Altaic languages', 'Manx', 'Latvian', 'Walloon', 'French', 'Scots', 'Bashkir', 'Komi', 'Kirghiz', 'Georgian', 'Hungarian', 'Tsonga', 'Altai', 'Gaelic', 'Maori', 'Latin', 'Artificial languages', 'Belarusian', 'Swahili', 'Icelandic', 'Gothic', 'Irish', 'Neapolitan', 'Romansh', 'Spanish', 'Dutch', 'German', 'Esperanto', 'North Ndebele', 'Persian', 'Welsh', 'Zulu', 'Ladino', 'Tongan', 'Italian', 'Hawaiian', 'Aromanian', 'English', 'Shona', 'Samoan', 'Romany']
 
@@ -130,7 +130,21 @@ function App() {
     left: false,
   });
 
+  const [markers, setMarkers] = React.useState([])
 
+  if(markers.length == 0){
+    getAllEntries(["ISBN", "Place of creation/publication"]).then((resp) => {
+      let markers = []
+      for(let item of resp.data){
+        let marker = {
+          id: item['ISBN'],
+          coord: item['Place of creation/publication'] 
+        }
+        markers.push(marker)
+      }
+      setMarkers(markers)
+    })
+  }
 
   // left navbar
   const toggleDrawer = (anchor, open) => (event) => {
@@ -262,7 +276,12 @@ function App() {
         </AppBar>
       </Container>
       <Container maxWidth style={{ margin: 0, padding: 0 }}>
-        {/* <MapContainer /> */}
+        {
+          markers.length == 0 ?
+            <CircularProgress />
+          :
+            <MapContainer markers={markers} />
+        }   
       </Container>
     </ThemeProvider>
   );
