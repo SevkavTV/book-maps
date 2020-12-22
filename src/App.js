@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import Grid from '@material-ui/core/Grid';
 import { Container } from '@material-ui/core';
@@ -22,6 +22,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import SendIcon from '@material-ui/icons/Send';
 import { createMuiTheme } from '@material-ui/core/styles';
 import MapContainer from './GoogleMaps';
+import { getAllEntries } from './Services/httpRequests'
 
 // Languages
 const Languages = ['Kazakh', 'Swedish', 'Yiddish', 'Karachay-Balkar', 'Russian', 'Portuguese', 'Cornish', 'Syriac', 'Altaic languages', 'Manx', 'Latvian', 'Walloon', 'French', 'Scots', 'Bashkir', 'Komi', 'Kirghiz', 'Georgian', 'Hungarian', 'Tsonga', 'Altai', 'Gaelic', 'Maori', 'Latin', 'Artificial languages', 'Belarusian', 'Swahili', 'Icelandic', 'Gothic', 'Irish', 'Neapolitan', 'Romansh', 'Spanish', 'Dutch', 'German', 'Esperanto', 'North Ndebele', 'Persian', 'Welsh', 'Zulu', 'Ladino', 'Tongan', 'Italian', 'Hawaiian', 'Aromanian', 'English', 'Shona', 'Samoan', 'Romany']
@@ -116,6 +117,9 @@ const useStyles = makeStyles((theme) => ({
 // App
 function App() {
 
+  getAllEntries(["ISBN", "Place of creation/publication"]).then((resp) => {
+    console.log(resp)
+  })
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -235,7 +239,7 @@ function App() {
         </AppBar>
       </Container>
       <Container maxWidth style={{ margin: 0, padding: 0 }}>
-        <MapContainer></MapContainer>
+        {/* <MapContainer></MapContainer> */}
       </Container>
     </ThemeProvider>
   );
