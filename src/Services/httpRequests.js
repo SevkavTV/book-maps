@@ -35,3 +35,13 @@ export const get_book_info_by_ISBN = async (ISBN) => {
 
     return response
 }
+
+export const filter_books = async (filter_obj) => {
+    const response = await axios.get(
+        'http://127.0.0.1:5000/api/filter_books',
+        JSON.stringify(filter_obj),
+        { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
+    )
+
+    return response
+}
