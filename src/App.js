@@ -121,6 +121,7 @@ function App() {
   const [markers, setMarkers] = React.useState([])
 
   const [markerInfo, setInfoMarker] = React.useState(null)
+  const [searchText, setSearchText] = React.useState(null)
 
   if (markers.length === 0) {
     getAllEntries(["ISBN", "Place of creation/publication"]).then((resp) => {
@@ -156,6 +157,10 @@ function App() {
       setInfoMarker(resp.data)
     })
   }
+
+  const onSearchChange = (event) => {
+    setSearchText(event.target.value)
+  };
 
 
   // multiselect
@@ -272,6 +277,7 @@ function App() {
                   input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={onSearchChange}
               />
             </div>
           </Toolbar>
