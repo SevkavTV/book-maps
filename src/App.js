@@ -9,7 +9,6 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import Grid from '@material-ui/core/Grid';
 import { CircularProgress, Container, TextField } from '@material-ui/core';
-
 import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
 import Divider from '@material-ui/core/Divider';
@@ -19,7 +18,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import SearchIcon from '@material-ui/icons/Search';
 import SendIcon from '@material-ui/icons/Send';
-
 import MapContainer from './GoogleMaps';
 import Input from '@material-ui/core/Input';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -279,17 +277,32 @@ function App() {
       </Container>
 
       <Grid container direction="row">
-        <Grid item xs={11}>
+        <Grid item xs={10}>
           {
             markers.length === 0 ?
               <CircularProgress />
               :
-              <MapContainer markers={markers} onMarkerClick={onMarkerClick}/>
+              <MapContainer markers={markers} onMarkerClick={onMarkerClick} />
           }
         </Grid>
-        <Grid item xs={1} container >
-          мой ,лант
-          </Grid>
+        <Grid
+          item
+          xs={2}
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item>{null || markerInfo['title']}</Grid>
+          <Grid item>{null || markerInfo['Content type']}</Grid>
+          <Grid item>{null || markerInfo['Country of publication']}</Grid>
+          <Grid item>{null || markerInfo['Date of creation/publication']}</Grid>
+          <Grid item>{null || markerInfo['Genre']}</Grid>
+          <Grid item>{null || markerInfo['Languages']}</Grid>
+          <Grid item>{null || markerInfo['Name']}</Grid>
+          <Grid item>{null || markerInfo['Physical description']}</Grid>
+          <Grid item>{null || markerInfo['Publisher']}</Grid>
+        </Grid>
       </Grid>
 
 
