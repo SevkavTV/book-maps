@@ -24,13 +24,14 @@ export const get_entries_by_param = async (param) => {
     return response
 }
 
-export const get_book_info_by_ISBN = async (ISBN) => {
+export const getBookInfoByISBN = async (ISBN) => {
     const response = await axios.post(
         'http://127.0.0.1:5000/api/get_book_info_by_ISBN',
         {
-            'ISBN': JSON.stringify(ISBN),
+            'ISBN': ISBN,
         },
-        { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
+        { headers: { 'Content-Type': 'application/json'}},
+        
     )
 
     return response

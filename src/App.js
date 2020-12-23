@@ -24,7 +24,7 @@ import MapContainer from './GoogleMaps';
 import Input from '@material-ui/core/Input';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import { getAllEntries } from './Services/httpRequests'
+import { getAllEntries, getBookInfoByISBN } from './Services/httpRequests'
 // Languages
 const languages = ['Kazakh', 'Swedish', 'Yiddish', 'Karachay-Balkar', 'Russian', 'Portuguese', 'Cornish', 'Syriac', 'Altaic languages', 'Manx', 'Latvian', 'Walloon', 'French', 'Scots', 'Bashkir', 'Komi', 'Kirghiz', 'Georgian', 'Hungarian', 'Tsonga', 'Altai', 'Gaelic', 'Maori', 'Latin', 'Artificial languages', 'Belarusian', 'Swahili', 'Icelandic', 'Gothic', 'Irish', 'Neapolitan', 'Romansh', 'Spanish', 'Dutch', 'German', 'Esperanto', 'North Ndebele', 'Persian', 'Welsh', 'Zulu', 'Ladino', 'Tongan', 'Italian', 'Hawaiian', 'Aromanian', 'English', 'Shona', 'Samoan', 'Romany']
 
@@ -120,15 +120,20 @@ function App() {
 
   const [markers, setMarkers] = React.useState([])
 
+  const [markerInfo, setInfoMarker] = React.useState(null)
+
   if (markers.length === 0) {
     getAllEntries(["ISBN", "Place of creation/publication"]).then((resp) => {
-      let markers = []
+      let markers = {}
       for (let item of resp.data) {
-        let marker = {
-          id: item['ISBN'],
-          coord: item['Place of creation/publication']
-        }
-        markers.push(marker)
+
+        let lat_change = Math.random() / 10 - 0.05
+        let lng_change = Math.random() / 10 - 0.05
+
+        item['Place of creation/publication'].lat = item['Place of creation/publication'].lat + lat_change
+        item['Place of creation/publication'].lng = item['Place of creation/publication'].lng + lng_change
+
+        markers[item['ISBN']] = item['Place of creation/publication']
       }
       console.log(markers)
       setMarkers(markers)
@@ -143,6 +148,14 @@ function App() {
 
     setState({ ...state, [anchor]: open });
   };
+
+  const onMarkerClick = (marker) => {
+    let markerId = marker.id
+    getBookInfoByISBN(markerId).then((resp) => {
+      console.log(resp.data)
+      setInfoMarker(resp.data)
+    })
+  }
 
 
   // multiselect
@@ -246,7 +259,7 @@ function App() {
               </React.Fragment>
             ))}
             <Typography className={classes.title} variant="h6" noWrap>
-              Google Maps
+              Book Maps
           </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -264,14 +277,22 @@ function App() {
           </Toolbar>
         </AppBar>
       </Container>
-      <Container maxWidth="xl" style={{ margin: 0, padding: 0 }}>
-        {
-          // markers.length === 0 ?
-          //   <CircularProgress />
-          // :
-          //   <MapContainer markers={markers}/>
-        }
-      </Container>
+
+      <Grid container direction="row">
+        <Grid item xs={11}>
+          {
+            markers.length === 0 ?
+              <CircularProgress />
+              :
+              <MapContainer markers={markers} onMarkerClick={onMarkerClick}/>
+          }
+        </Grid>
+        <Grid item xs={1} container >
+          мой ,лант
+          </Grid>
+      </Grid>
+
+
     </>
   );
 }
