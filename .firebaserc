@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "mavka-c5c01"
+  },
+  "targets": {
+    "mavka-c5c01": {
+      "hosting": {
+        "book": [
+          "book-maps"
+        ]
+      }
+    }
+  }
+}

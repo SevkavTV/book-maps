@@ -344,14 +344,14 @@ function App() {
           alignItems="left"
         >
           <Grid item><Typography variant="h6" align="center" style={{fontWeight:'bold'}}>{markerInfo ? markerInfo['Title'] : null}</Typography></Grid>
-          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Content type": {markerInfo ? markerInfo['Content type'] : null}</Typography></Grid>
-          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Country": {markerInfo ? markerInfo['Country of publication'] : null}</Typography></Grid>
-          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Date": {markerInfo ? markerInfo['Date of creation/publication'] : null}</Typography></Grid>
-          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Genre": {markerInfo ? markerInfo['Genre'] : null}</Typography></Grid>
-          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Languages": {markerInfo ? markerInfo['Languages'] : null}</Typography></Grid>
-          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Name": {markerInfo ? markerInfo['Name'] : null}</Typography></Grid>
-          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Description": {markerInfo ? markerInfo['Physical description'] : null}</Typography></Grid>
-          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Publisher": {markerInfo ? markerInfo['Publisher'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{ fontSize: '17px' }}><b>Content type</b>: {markerInfo ? markerInfo['Content type'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{ fontSize: '17px' }}><b>Country</b>: {markerInfo ? markerInfo['Country of publication'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{ fontSize: '17px' }}><b>Date</b>: {markerInfo ? markerInfo['Date of creation/publication'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{ fontSize: '17px' }}><b>Genre</b>: {markerInfo ? markerInfo['Genre'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{ fontSize: '17px' }}><b>Languages</b>: {markerInfo ? markerInfo['Languages'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{ fontSize: '17px' }}><b>Name</b>: {markerInfo ? markerInfo['Name'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{ fontSize: '17px' }}><b>Description</b>: {markerInfo ? markerInfo['Physical description'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{ fontSize: '17px' }}><b>Publisher</b>: {markerInfo ? markerInfo['Publisher'] : null}</Typography></Grid>
         </Grid>
       </Grid>
 
