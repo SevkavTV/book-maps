@@ -1,6 +1,6 @@
 import React from 'react'
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react'
-
+const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 
 const mapStyles = {
     width: '80%',
@@ -27,7 +27,7 @@ export class MapContainer extends React.Component {
                 initialCenter={{ lat: 51.5287718, lng: -0.2416804 }}
                 onClick={this.onMapClicked}
             >
-                {books}  
+                    {books}
             </Map>
         )
     }

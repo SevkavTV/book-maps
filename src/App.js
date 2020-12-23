@@ -95,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
     width: 200,
+    
   },
   input: {
     width: 200,
@@ -291,12 +292,19 @@ function App() {
             </div>
             <Button
               variant="contained"
-              color="primary"
               className={classes.button}
-              style={{backgroundColor: 'white', color: 'blue'}}
               onClick={findByParam}
+              color="theme.palette.common.white"
             >
               Find
+            </Button>
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={findByParam}
+              color="theme.palette.common.white"
+            >
+              Reset
             </Button>
           </Toolbar>
         </AppBar>
@@ -317,17 +325,17 @@ function App() {
           container
           direction="column"
           justify="center"
-          alignItems="center"
+          alignItems="left"
         >
-          <Grid item>{markerInfo ? markerInfo['Title'] : null}</Grid>
-          <Grid item>{markerInfo ? markerInfo['Content type'] : null}</Grid>
-          <Grid item>{markerInfo ? markerInfo['Country of publication'] : null}</Grid>
-          <Grid item>{markerInfo ? markerInfo['Date of creation/publication'] : null}</Grid>
-          <Grid item>{markerInfo ? markerInfo['Genre'] : null}</Grid>
-          <Grid item>{markerInfo ? markerInfo['Languages'] : null}</Grid>
-          <Grid item>{markerInfo ? markerInfo['Name'] : null}</Grid>
-          <Grid item>{markerInfo ? markerInfo['Physical description'] : null}</Grid>
-          <Grid item>{markerInfo ? markerInfo['Publisher'] : null}</Grid>
+          <Grid item><Typography variant="h6" align="center" style={{fontWeight:'bold'}}>{markerInfo ? markerInfo['Title'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Content type": {markerInfo ? markerInfo['Content type'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Country": {markerInfo ? markerInfo['Country of publication'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Date": {markerInfo ? markerInfo['Date of creation/publication'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Genre": {markerInfo ? markerInfo['Genre'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Languages": {markerInfo ? markerInfo['Languages'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Name": {markerInfo ? markerInfo['Name'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Description": {markerInfo ? markerInfo['Physical description'] : null}</Typography></Grid>
+          <Grid item><Typography variant="body1" style={{fontSize:'17px'}}>"Publisher": {markerInfo ? markerInfo['Publisher'] : null}</Typography></Grid>
         </Grid>
       </Grid>
 
