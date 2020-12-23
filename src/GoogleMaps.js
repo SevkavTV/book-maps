@@ -1,6 +1,5 @@
 import React from 'react'
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react'
-import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react'
 
 
 const mapStyles = {
@@ -9,9 +8,6 @@ const mapStyles = {
 };
 
 export class MapContainer extends React.Component {
-    constructor(props) {
-        super(props)
-    }
 
     render() {
         const books = []
