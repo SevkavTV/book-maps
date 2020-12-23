@@ -8,6 +8,10 @@ const mapStyles = {
 };
 
 export class MapContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { isOpen: true };
+    }
     render() {
         return (
             <Map
