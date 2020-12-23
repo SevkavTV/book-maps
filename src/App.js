@@ -271,7 +271,15 @@ function App() {
                 }}
                 inputProps={{ 'aria-label': 'search' }}
               />
+
             </div>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+            >
+              Find
+            </Button>
           </Toolbar>
         </AppBar>
       </Container>
@@ -293,7 +301,7 @@ function App() {
           justify="center"
           alignItems="center"
         >
-          <Grid item>{null || markerInfo['title']}</Grid>
+          {/* <Grid item>{null || markerInfo['title']}</Grid>
           <Grid item>{null || markerInfo['Content type']}</Grid>
           <Grid item>{null || markerInfo['Country of publication']}</Grid>
           <Grid item>{null || markerInfo['Date of creation/publication']}</Grid>
@@ -301,7 +309,7 @@ function App() {
           <Grid item>{null || markerInfo['Languages']}</Grid>
           <Grid item>{null || markerInfo['Name']}</Grid>
           <Grid item>{null || markerInfo['Physical description']}</Grid>
-          <Grid item>{null || markerInfo['Publisher']}</Grid>
+          <Grid item>{null || markerInfo['Publisher']}</Grid> */}
         </Grid>
       </Grid>
 
