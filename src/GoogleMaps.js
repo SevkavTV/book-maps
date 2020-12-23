@@ -15,9 +15,20 @@ export class MapContainer extends React.Component {
         const markers_obj = this.props.markers
 
         for (let key in markers_obj) {
-            books.push(
-                <Marker key={key} id={key} position={{ lat: markers_obj[key].lat, lng: markers_obj[key].lng }} onClick={this.props.onMarkerClick} />
-            )
+            if (this.props.booksBySearch){
+                for (let item of this.props.booksBySearch){
+                    if(item && item === key){
+                        books.push(
+                            <Marker key={key} id={key} position={{ lat: markers_obj[key].lat, lng: markers_obj[key].lng }} onClick={this.props.onMarkerClick} />
+                        )
+                    } 
+                }
+            }
+            else{
+                books.push(
+                    <Marker key={key} id={key} position={{ lat: markers_obj[key].lat, lng: markers_obj[key].lng }} onClick={this.props.onMarkerClick} />
+                )
+            }
         }
         return (
             <Map

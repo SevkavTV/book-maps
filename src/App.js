@@ -121,6 +121,7 @@ function App() {
 
   const [markerInfo, setInfoMarker] = React.useState(null)
   const [searchText, setSearchText] = React.useState(null)
+  const [booksBySearch, setBooksBySearch] = React.useState(null)
 
   if (markers.length === 0) {
     getAllEntries(["ISBN", "Place of creation/publication"]).then((resp) => {
@@ -166,8 +167,11 @@ function App() {
     console.log(searchText)
     if(searchText){
       getEntriesByParam(searchText).then((resp) => {
-        console.log(resp.data)
-        console.log(typeof(resp.data))
+        let bookList = []
+        for(let item in resp.data){
+          bookList.push(resp.data[item])
+        }
+        setBooksBySearch(bookList)
       })
     }
   }
@@ -316,7 +320,7 @@ function App() {
             markers.length === 0 ?
               <CircularProgress />
               :
-              <MapContainer markers={markers} onMarkerClick={onMarkerClick} />
+              <MapContainer markers={markers} onMarkerClick={onMarkerClick} booksBySearch={booksBySearch}/>
           }
         </Grid>
         <Grid
