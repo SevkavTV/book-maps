@@ -22,7 +22,7 @@ import MapContainer from './GoogleMaps';
 import Input from '@material-ui/core/Input';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import { getAllEntries, getBookInfoByISBN } from './Services/httpRequests'
+import { getAllEntries, getBookInfoByISBN, getEntriesByParam } from './Services/httpRequests'
 // Languages
 const languages = ['Kazakh', 'Swedish', 'Yiddish', 'Karachay-Balkar', 'Russian', 'Portuguese', 'Cornish', 'Syriac', 'Altaic languages', 'Manx', 'Latvian', 'Walloon', 'French', 'Scots', 'Bashkir', 'Komi', 'Kirghiz', 'Georgian', 'Hungarian', 'Tsonga', 'Altai', 'Gaelic', 'Maori', 'Latin', 'Artificial languages', 'Belarusian', 'Swahili', 'Icelandic', 'Gothic', 'Irish', 'Neapolitan', 'Romansh', 'Spanish', 'Dutch', 'German', 'Esperanto', 'North Ndebele', 'Persian', 'Welsh', 'Zulu', 'Ladino', 'Tongan', 'Italian', 'Hawaiian', 'Aromanian', 'English', 'Shona', 'Samoan', 'Romany']
 
@@ -125,7 +125,6 @@ function App() {
     getAllEntries(["ISBN", "Place of creation/publication"]).then((resp) => {
       let markers = {}
       for (let item of resp.data) {
-
         let lat_change = Math.random() / 10 - 0.05
         let lng_change = Math.random() / 10 - 0.05
 
@@ -151,8 +150,10 @@ function App() {
   const onMarkerClick = (marker) => {
     let markerId = marker.id
     getBookInfoByISBN(markerId).then((resp) => {
-      console.log(resp.data)
-      setInfoMarker(resp.data)
+      let r = resp.data.replaceAll('NaN', 'null')
+      let ans = JSON.parse(r)
+      console.log(ans)
+      setInfoMarker(ans)
     })
   }
 
@@ -160,6 +161,15 @@ function App() {
     setSearchText(event.target.value)
   };
 
+  const findByParam = () => {
+    console.log(searchText)
+    if(searchText){
+      getEntriesByParam(searchText).then((resp) => {
+        console.log(resp.data)
+        console.log(typeof(resp.data))
+      })
+    }
+  }
 
   // multiselect
   const [language, setLanguage] = React.useState([]);
@@ -283,6 +293,8 @@ function App() {
               variant="contained"
               color="primary"
               className={classes.button}
+              style={{backgroundColor: 'white', color: 'blue'}}
+              onClick={findByParam}
             >
               Find
             </Button>
@@ -307,15 +319,15 @@ function App() {
           justify="center"
           alignItems="center"
         >
-          {/* <Grid item>{null || markerInfo['title']}</Grid>
-          <Grid item>{null || markerInfo['Content type']}</Grid>
-          <Grid item>{null || markerInfo['Country of publication']}</Grid>
-          <Grid item>{null || markerInfo['Date of creation/publication']}</Grid>
-          <Grid item>{null || markerInfo['Genre']}</Grid>
-          <Grid item>{null || markerInfo['Languages']}</Grid>
-          <Grid item>{null || markerInfo['Name']}</Grid>
-          <Grid item>{null || markerInfo['Physical description']}</Grid>
-          <Grid item>{null || markerInfo['Publisher']}</Grid> */}
+          <Grid item>{markerInfo ? markerInfo['Title'] : null}</Grid>
+          <Grid item>{markerInfo ? markerInfo['Content type'] : null}</Grid>
+          <Grid item>{markerInfo ? markerInfo['Country of publication'] : null}</Grid>
+          <Grid item>{markerInfo ? markerInfo['Date of creation/publication'] : null}</Grid>
+          <Grid item>{markerInfo ? markerInfo['Genre'] : null}</Grid>
+          <Grid item>{markerInfo ? markerInfo['Languages'] : null}</Grid>
+          <Grid item>{markerInfo ? markerInfo['Name'] : null}</Grid>
+          <Grid item>{markerInfo ? markerInfo['Physical description'] : null}</Grid>
+          <Grid item>{markerInfo ? markerInfo['Publisher'] : null}</Grid>
         </Grid>
       </Grid>
 

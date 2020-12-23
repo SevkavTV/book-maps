@@ -12,11 +12,11 @@ export const getAllEntries = async (cols) => {
     return response
 }
 
-export const get_entries_by_param = async (param) => {
+export const getEntriesByParam = async (param) => {
     const response = await axios.post(
         'http://127.0.0.1:5000/api/get_entries_by_param',
         {
-            'param': JSON.stringify(param),
+            'param': param,
         },
         { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
     )
