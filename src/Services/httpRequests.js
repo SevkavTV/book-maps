@@ -37,7 +37,7 @@ export const getBookInfoByISBN = async (ISBN) => {
     return response
 }
 
-export const filter_books = async (filter_obj) => {
+export const filterBooks = async (filter_obj) => {
     const response = await axios.post(
         'http://127.0.0.1:5000/api/filter_books',
         JSON.stringify(filter_obj),

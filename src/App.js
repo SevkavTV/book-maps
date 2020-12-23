@@ -22,7 +22,7 @@ import MapContainer from './GoogleMaps';
 import Input from '@material-ui/core/Input';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import { getAllEntries, getBookInfoByISBN, getEntriesByParam } from './Services/httpRequests'
+import { getAllEntries, getBookInfoByISBN, getEntriesByParam, filterBooks } from './Services/httpRequests'
 // Languages
 const languages = ['Kazakh', 'Swedish', 'Yiddish', 'Karachay-Balkar', 'Russian', 'Portuguese', 'Cornish', 'Syriac', 'Altaic languages', 'Manx', 'Latvian', 'Walloon', 'French', 'Scots', 'Bashkir', 'Komi', 'Kirghiz', 'Georgian', 'Hungarian', 'Tsonga', 'Altai', 'Gaelic', 'Maori', 'Latin', 'Artificial languages', 'Belarusian', 'Swahili', 'Icelandic', 'Gothic', 'Irish', 'Neapolitan', 'Romansh', 'Spanish', 'Dutch', 'German', 'Esperanto', 'North Ndebele', 'Persian', 'Welsh', 'Zulu', 'Ladino', 'Tongan', 'Italian', 'Hawaiian', 'Aromanian', 'English', 'Shona', 'Samoan', 'Romany']
 
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 200,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(2)
   },
   button: {
     margin: theme.spacing(1),
@@ -163,8 +163,11 @@ function App() {
     setSearchText(event.target.value)
   };
 
+
+  const resetBooks = () => {
+    setBooksBySearch(null)
+  }
   const findByParam = () => {
-    console.log(searchText)
     if(searchText){
       getEntriesByParam(searchText).then((resp) => {
         let bookList = []
@@ -174,6 +177,20 @@ function App() {
         setBooksBySearch(bookList)
       })
     }
+  }
+
+  const filterByParam = () => {
+    const filterObj = {
+      Languages: language,
+      operator: "AND"
+    }
+    filterBooks(filterObj).then((resp) => {
+      let bookList = []
+      for (let item in resp.data) {
+        bookList.push(resp.data[item])
+      }
+      setBooksBySearch(bookList)
+    })
   }
 
   // multiselect
@@ -211,7 +228,7 @@ function App() {
           spacing={3}
         >
           <Grid item>
-            <InputLabel id="demo-mutiple-checkbox-label" className={classes.label}>Contries</InputLabel>
+            <InputLabel id="demo-mutiple-checkbox-label" className={classes.label}>Languages</InputLabel>
             <Select
               labelId="mutiple-checkbox-label"
               id="mutiple-checkbox"
@@ -234,19 +251,14 @@ function App() {
             <Divider />
           </Grid>
           <Grid item>
-            <TextField id="standard-basic" label="from" className={classes.input} />
-          </Grid>
-          <Grid item>
-            <TextField id="standard-basic" label="to" className={classes.input} />
-          </Grid>
-          <Grid item>
             <Button
               variant="contained"
               color="primary"
               className={classes.button}
               endIcon={<SendIcon />}
+              onClick={filterByParam}
             >
-              Make query
+              Filter
             </Button>
           </Grid>
         </Grid>
@@ -305,7 +317,7 @@ function App() {
             <Button
               variant="contained"
               className={classes.button}
-              onClick={findByParam}
+              onClick={resetBooks}
               color="theme.palette.common.white"
             >
               Reset
